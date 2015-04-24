@@ -157,7 +157,9 @@ class User < ActiveRecord::Base
 
   delegate :path, to: :namespace, allow_nil: true, prefix: true
 
-  state_machine :state, initial: :active do
+  initial_state = Gitlab.config.gitlab.user_requires_admin_approval ? :blocked : :active
+
+  state_machine :state, initial: initial_state do
     event :block do
       transition active: :blocked
     end

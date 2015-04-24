@@ -110,6 +110,7 @@ class NotificationService
   def new_user(user, token = nil)
     # Don't email omniauth created users
     mailer.new_user_email(user.id, token) unless user.identities.any?
+    mailer.new_blocked_user(user.id) if user.blocked?
   end
 
   # Notify users on new note in system

@@ -19,5 +19,10 @@ module Emails
       @target_url = user_url(@user)
       mail(to: @user.notification_email, subject: subject("SSH key was added to your account"))
     end
+
+    def new_blocked_user_email(user_id)
+      @user = User.find(user_id)
+      mail(to: Gitlab.config.gitlab.admin_email, subject: subject("New user requires authorization"))
+    end
   end
 end
